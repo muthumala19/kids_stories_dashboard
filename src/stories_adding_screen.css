@@ -1,0 +1,79 @@
+:root {
+    /*Margins*/
+    --left_margin: 1vh;
+    --right_margin: 1vh;
+    --top_margin: 1vh;
+    --bottom_margin: 1vh;
+
+    /*Paddings*/
+    --left_padding: 3vh;
+    --right_padding: 3vh;
+    --top_padding: 3vh;
+    --bottom_padding: 3vh;
+
+    /*colors*/
+    --primary: #555555FF;
+    --primary_container: #D9E4DDFF;
+    --secondary: #FBF7F0FF;
+    --secondary_container: #CDC9C3FF;
+
+    /*borders*/
+    --border_radius: 5vh;
+}
+
+.wrapper {
+    position: relative;
+    /*margin: var(--top_margin) var(--left_margin) var(--bottom_margin) var(--right_margin);*/
+    /*border-radius: var(--border_radius);*/
+    /*display: flex;*/
+    min-height: calc(100vh - var(--top_margin) - var(--bottom_margin));
+    background: var(--secondary_container);
+    color: var(--primary); /*text color*/
+    padding: var(--top_padding) var(--left_padding) var(--bottom_padding) var(--right_padding);
+}
+
+.wrapper p {
+    font-weight: bold;
+}
+
+.label_input_wrapper {
+    position: absolute;
+    padding: var(--top_padding) var(--left_padding) var(--bottom_padding) var(--right_padding);
+    color: var(--secondary);
+    width: 75vw;
+}
+
+::-webkit-scrollbar {
+    display: none;
+
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border-color: var(--primary) !important;
+}
+
+.buttongroup_wrapper {
+    position: relative;
+    padding: var(--top_padding) var(--left_padding) var(--bottom_padding) var(--right_padding);
+}
+
+.buttongroup_wrapper Button {
+    border-radius: var(--border_radius);
+    min-height: 7vh;
+    min-width: 20vw;
+    font-weight: bold;
+}
+
+.submit_button {
+    margin: var(--top_margin) var(--left_margin) var(--bottom_margin) var(--right_margin);
+    background: var(--primary);
+    color: var(--secondary_container);
+}
+
+.preview_button {
+    background: var(--secondary_container);
+    color: var(--primary);
+    margin: var(--top_margin) var(--left_margin) var(--bottom_margin) var(--right_margin);
+
+}
+
