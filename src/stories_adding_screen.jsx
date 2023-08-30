@@ -1,5 +1,5 @@
 import './stories_adding_screen.css'
-import {Box, TextField} from "@mui/material";
+import {Box, CircularProgress, TextField} from "@mui/material";
 import {Button} from "rsuite";
 import {useState} from "react";
 import {addDoc, collection} from "firebase/firestore"
@@ -8,10 +8,18 @@ import {database} from "./firebase"
 
 export default function StoryAddingInterface() {
     const [story, setStory] = useState("");
+    const [uploading, setUploading] = useState(false);
     const uploadStory = async () => {
-        const json = JSON.parse(story.toString());
-        await addDoc(collection(database, "stories"), json)
-        console.log(json.title);
+        try {
+            setUploading(true);
+            const json = JSON.parse(story.toString());
+            await addDoc(collection(database, "stories"), json)
+        } catch (e) {
+            alert('Invalid Story format, Upload Denied.')
+        } finally {
+            setUploading(false);
+            setStory('');
+        }
     };
 
     return (<Box component="form" className={"wrapper"}>
@@ -37,9 +45,18 @@ export default function StoryAddingInterface() {
                    }}
         />
         <br/>
-        <div align={"right"} className={"buttongroup_wrapper"}>
-            <Button className={"preview_button"} onClick={() => console.log(story)}>Preview</Button>
-            <Button className={"submit_button"} onClick={uploadStory}>Submit and Upload</Button>
+        <div align={"center"} className={"buttongroup_wrapper"}>
+            <div>
+
+                <Button className={"preview_button"} onClick={() => console.log(story)}>Preview</Button>
+            </div>
+            <div>{!uploading ?
+                <Button className={"submit_button"} onClick={uploadStory}>Submit and Upload</Button> :
+                <CircularProgress/>
+
+            }
+
+            </div>
         </div>
     </Box>);
 }
