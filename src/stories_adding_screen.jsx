@@ -4,6 +4,7 @@ import {Button} from "rsuite";
 import {useState} from "react";
 import {addDoc, collection} from "firebase/firestore"
 import {database} from "./firebase"
+import validator from "./validate_story";
 
 
 export default function StoryAddingInterface() {
@@ -13,12 +14,14 @@ export default function StoryAddingInterface() {
         try {
             setUploading(true);
             const json = JSON.parse(story.toString());
-            await addDoc(collection(database, "stories"), json)
+            if (validator(json)) {
+                await addDoc(collection(database, "stories"), json)
+                setStory('');
+            }
         } catch (e) {
             alert('Invalid Story format, Upload Denied.')
         } finally {
             setUploading(false);
-            setStory('');
         }
     };
 
@@ -28,7 +31,6 @@ export default function StoryAddingInterface() {
                    type="text"
                    value={story}
                    onChange={(newValue) => {
-
                        return setStory(newValue.target.value);
                    }}
                    id="outlined-basic"
@@ -48,12 +50,12 @@ export default function StoryAddingInterface() {
         <div align={"center"} className={"buttongroup_wrapper"}>
             <div>
 
-                <Button className={"preview_button"} onClick={() => console.log(story)}>Preview</Button>
+                <Button className={"preview_button"}
+                        onClick={() => console.log(story)}>Preview</Button>
             </div>
             <div>{!uploading ?
                 <Button className={"submit_button"} onClick={uploadStory}>Submit and Upload</Button> :
                 <CircularProgress/>
-
             }
 
             </div>
