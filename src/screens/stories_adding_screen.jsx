@@ -3,8 +3,8 @@ import {Box, CircularProgress, TextField} from "@mui/material";
 import {Button} from "rsuite";
 import {useState} from "react";
 import {addDoc, collection} from "firebase/firestore"
-import {database} from "./firebase"
-import validator from "./validate_story";
+import {database} from "../firebase"
+import validator from "../validators/validate_story";
 
 
 export default function StoryAddingInterface() {

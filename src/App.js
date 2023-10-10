@@ -1,5 +1,5 @@
 import './App.css';
-import StoryAddingScreen from "./stories_adding_screen";
+import StoryAddingScreen from "./screens/stories_adding_screen";
 
 function App() {
     return (
