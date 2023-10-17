@@ -2,9 +2,11 @@ import './stories_adding_screen.css'
 import {Box, CircularProgress, TextField} from "@mui/material";
 import {Button} from "rsuite";
 import {useState} from "react";
-import {addDoc, collection} from "firebase/firestore"
-import {database} from "../firebase"
-import validator from "../validators/validate_story";
+import axios from "axios";
+// import {addDoc, collection} from "firebase/firestore"
+// import {database} from "../firebase"
+// import validator from "../validators/validate_story";
+
 
 
 export default function StoryAddingInterface() {
@@ -14,10 +16,25 @@ export default function StoryAddingInterface() {
         try {
             setUploading(true);
             const json = JSON.parse(story.toString());
-            if (validator(json)) {
-                await addDoc(collection(database, "stories"), json)
-                setStory('');
-            }
+            // if (validator(json)) {
+            //     await addDoc(collection(database, "stories"), json)
+            //     setStory('');
+            // }
+            axios.post('http://localhost:5000/validateStory', json)
+                .then((res) => {
+                    console.log(res.data);
+                    setStory('');
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        alert(err.response.data);
+                        console.log(err.response.data);
+                    } else {
+                        console.log("Network error or server is down.");
+                    }
+                }).finally(() => {
+            });
+
         } catch (e) {
             alert('Invalid Story format, Upload Denied.')
         } finally {
